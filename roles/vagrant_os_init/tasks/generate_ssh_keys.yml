@@ -1,0 +1,8 @@
+---
+-  name: Generate RSA keypair for the ansible to use
+   openssh_keypair:
+    path: "{{ test_ssh_keys_path }}"
+    type: 'rsa'
+    size: 4096
+    mode: 0600
+    force: 'no'

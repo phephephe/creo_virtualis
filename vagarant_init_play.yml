@@ -1,0 +1,15 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    # Check and install python3
+    - name: Check and install python3
+      import_role:
+        name: vagrant_os_init
+        tasks_from: install_python.yml
+
+- hosts: all
+  gather_facts: true
+  tasks:
+    - import_role:
+        name: vagrant_os_init

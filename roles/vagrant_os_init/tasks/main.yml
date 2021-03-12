@@ -1,0 +1,20 @@
+---
+# Install sudo
+- name: Install Sudo
+  import_tasks: packets.yml
+
+- name: Set locale
+  import_tasks: locale.yml
+
+# Create user for ansible to use
+- name: Create user for Ansible
+  import_tasks: ansible_user.yml
+
+- name: Set authorized key taken from file for the Ansible user
+  authorized_key:
+    user: "{{ ansible_user_name }}"
+    state: present
+    key: "{{ lookup('file', {{ ansible_ssh_public_key_file }} ) }}"
+
+
+

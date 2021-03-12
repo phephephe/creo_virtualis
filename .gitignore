@@ -1,0 +1,18 @@
+# Vagrant
+.vagrant/
+.vagrant/**
+
+# Visual Studio Code
+.vscode
+.vdcode/**
+*.code-workspace
+*.settings
+*.swp
+.history
+.localhistory/
+
+# Ansible
+*.retry
+
+# OS X
+.DS_Store

@@ -1,0 +1,29 @@
+
+# Force python3 to be used
+ansible_python_interpreter: '/usr/bin/python3'
+
+# User account name that is used by Ansible.
+ansible_user_name: 'ansible'
+
+# Ansible user password
+ansible_user_password: "{{ vault_ansible_user_password }}"
+ansible_sudo_pass: "{{ vault_ansible_user_password }}"
+
+# Ansible connection and account details
+ansible_connection: 'ssh'
+ansible_user: "{{ ansible_user_name }}"
+
+# If defined then ssh ask pass is needed
+#ansible_ssh_pass: "{{ ansible_user_name }}"
+
+# Path to test rsa keys
+test_ssh_keys_path: '~/test_ssh_keys'
+
+# SSH private key to use for the Ansible ssh connections
+ansible_ssh_private_key_file: "{{ test_ssh_keys_path }}/test_id_rsa"
+
+# SSH public key to use for the Ansible ssh connections
+ansible_ssh_public_key_file: "{{ ansible_ssh_private_key_file }}.pub"
+
+# Locale
+locale: 'en_US.UTF-8'

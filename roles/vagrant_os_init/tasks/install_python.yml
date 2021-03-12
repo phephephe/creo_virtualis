@@ -1,0 +1,11 @@
+---
+# raw is used since python3 may not be installed
+- name: Check if Python3 is installed
+  raw: test -e /usr/bin/python3
+  changed_when: false
+  failed_when: false
+  register: check_python3
+
+- name: Install Python3
+  raw: apt -y update && apt install -y python3-minimal
+  when: check_python3.rc != 0

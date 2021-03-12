@@ -1,0 +1,4 @@
+# Add here your hosts
+[test]
+test1 ansible_host=192.170.1.20
+test2 ansible_host=192.170.1.21

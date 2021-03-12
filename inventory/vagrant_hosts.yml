@@ -1,0 +1,37 @@
+nodes:
+  - hostname: test1
+    ip: '192.170.1.20'
+    ip2: '192.170.2.20'
+    cpu: 1
+    mem: 1024
+    box: 'debian/buster64'
+  - hostname: test2
+    ip: '192.170.1.21'
+    ip2: '192.170.2.21'
+    cpu: 2
+    mem: 1024
+    box: 'debian/stretch64'
+
+# Default virtualbox to use
+#box: "centos/7"
+
+# Ansible user name to Vagrant to use
+ansible_user: vagrant
+ansible_user_password: 'vagrant'
+
+# Path to be create for ssh keys
+ssh_key_dir: '~/test_ssh_keys/'
+# Actual private key to be cretated
+ssh_key: '~/test_ssh_keys/test_id_rsa' 
+# Path to public key using ENV variable to copy to knowhosts
+public_key_path: "#{ENV['HOME']}/test_ssh_keys/test_id_rsa.pub"
+# Ansible intentory to use
+ansible_inventory_path: "inventory/hosts"
+# Ansible vault password file
+ansible_vault_password_file: "vault_pass/vault_pass.txt"
+# Ansible cfg file path
+ansible_hostfile: "ansible.cfg"
+# Ansible play to play
+ansible_playbook: "vagarant_init_play.yml"
+# Ansible limit to use
+ansible_limit: "all"
