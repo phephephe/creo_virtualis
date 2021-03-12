@@ -1,0 +1,9 @@
+---
+- name: Install needed software
+  package:
+    name:
+      - sudo
+      - python3-apt
+      - gnupg2
+    state: present
+  become: yes  
