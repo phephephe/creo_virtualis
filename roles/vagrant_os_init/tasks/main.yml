@@ -1,7 +1,7 @@
 ---
-# Install sudo
-- name: Install Sudo
-  import_tasks: packets.yml
+# Install Needed minimum software
+- name: Install Needed minimum software
+  import_tasks: package.yml
 
 - name: Set locale
   import_tasks: locale.yml

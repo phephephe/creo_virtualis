@@ -1,8 +1,8 @@
-# VM to be created by Vagrant using the given values
-# default cpu=1, mem=512, box=debian/buster64 values will used if they are missing
-# If no ip is defined then Vagrant creates the default adapter 1 nat
+# VMs to be created by Vagrant using following values
+# default cpu=1, mem=512, box=debian/buster64 values will used if they are missing from nodes/hostname.
+# If no 'ip' is defined then Vagrant creates the default adapter 1 using nat.
 nodes:
-  - hostname: test1
+  - hostname: 'test1'
     ip: '192.170.1.20'
     ip2: '192.170.2.20'
     cpu: '1'
@@ -13,16 +13,16 @@ nodes:
     cpu: '2'
     mem: '1024'
     box: 'debian/stretch64'
-  - hostname: test3
+  - hostname: 'test3'
     ip: '192.170.1.22'
     ip2: '192.170.2.22'
     ip3: '192.170.3.22'
     ip4: '192.170.4.22'
     cpu: '1'
     box: 'debian/buster64'  
-  - hostname: test4
+  - hostname: 'test4'
 
-# Ansible user name to Vagrant to use
+# Ansible user name for Vagrant to use
 ansible_user: vagrant
 ansible_user_password: 'vagrant'
 
