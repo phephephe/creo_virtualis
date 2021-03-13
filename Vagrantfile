@@ -46,7 +46,7 @@ if File.exists?(File.join(File.dirname(__FILE__), hostfile))
   public_key_path = conf_vars['public_key_path']
   ansible_inventory_path = conf_vars['ansible_inventory_path']
   ansible_vault_password_file = conf_vars['ansible_vault_password_file']
-  ansible_hostfile = conf_vars['ansible_hostfile']
+  ansible_config_file = conf_vars['ansible_config_file']
   ansible_playbook = conf_vars['ansible_playbook']
   ansible_limit = conf_vars['ansible_limit']
 end
@@ -84,36 +84,38 @@ Vagrant.configure(vagrant_version) do |config|
   end
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
-  nodes.each_with_index do |nodes, index|
-    config.vm.define nodes['hostname'] do |cfg|
+  nodes.each_with_index do |node, index|
+    config.vm.define node['hostname'] do |cfg|
       cfg.vm.provider :virtualbox do |vb, override|
-        if nodes['box'].to_s.empty?
-          nodes['box'] = 'debian/buster64'
+        if node['box'].to_s.empty?
+          node['box'] = 'debian/buster64'
         end
-        if nodes['cpu'].to_s.empty?
-          nodes['cpu'] = '1'
+        if node['cpu'].to_s.empty?
+          node['cpu'] = '1'
         end
-        if nodes['mem'].to_s.empty?
-          nodes['mem'] = '512'
+        if node['mem'].to_s.empty?
+          node['mem'] = '512'
         end
-        config.vm.box = nodes['box']
-        if !nodes['ip'].to_s.empty?
-          override.vm.network :private_network, ip: nodes['ip']
+        config.vm.box = node['box']
+        if !node['ip'].to_s.empty?
+          override.vm.network :private_network, ip: node['ip']
         end
-        if !nodes['ip2'].to_s.empty?
-          override.vm.network :private_network, ip: nodes['ip2']
+        if !node['ip2'].to_s.empty?
+          override.vm.network :private_network, ip: node['ip2']
         end
-        if !nodes['ip3'].to_s.empty?
-          override.vm.network :private_network, ip: nodes['ip3']
+        if !node['ip3'].to_s.empty?
+          override.vm.network :private_network, ip: node['ip3']
         end
-        if !nodes['ip4'].to_s.empty?
-          override.vm.network :private_network, ip: nodes['ip4']
+        if !node['ip4'].to_s.empty?
+          override.vm.network :private_network, ip: node['ip4']
         end
-        override.vm.hostname = nodes['hostname']
-        vb.name = nodes['hostname']
-        vb.customize ['modifyvm', :id, '--memory', nodes['mem'], '--cpus', nodes['cpu'], '--hwvirtex', 'on']
+        override.vm.hostname = node['hostname']
+        vb.name = node['hostname']
+        vb.customize ['modifyvm', :id, '--memory', node['mem'], '--cpus', node['cpu'], '--hwvirtex', 'on']
       end # end provider
-
+      
+    # code for the last node member
+    if index == nodes.count - 1
     # Lets copy our generated ssh public key as authorized key to the Virtualbox VMs
     file_pub = File.open("#{ENV['HOME']}/#{ssh_key_dir}/#{ssh_key}.pub")
     public_key = file_pub.read
@@ -128,16 +130,14 @@ Vagrant.configure(vagrant_version) do |config|
         echo 'UserKnownHostsFile /dev/null' >> /home/#{ansible_user}/.ssh/config
         chmod -R 600 /home/#{ansible_user}/.ssh/config
         ", privileged: false
-
-    # Ansible is run after last node is created to all (test hodst group) the nodes
-    if index == nodes.size - 1
-      # code for the last node member
+    
+      # Ansible is run after last node is created to all (test hodst group) the nodes
       cfg.vm.provision :ansible do |ansible|
         # Disable default limit to connect to all the machines
         ansible.limit = "#{ansible_limit}"
         ansible.inventory_path = "#{ansible_inventory_path}"
         ansible.vault_password_file = "#{ansible_vault_password_file}"
-        ansible.hostfile = "#{ansible_hostfile}"
+        ansible.config_file = "#{ansible_config_file}"
         ansible.playbook = "#{ansible_playbook}"
         ansible.compatibility_mode = "2.0"
         ansible.verbose = true

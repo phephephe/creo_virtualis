@@ -35,7 +35,7 @@ ansible_inventory_path: "inventory/hosts"
 # Ansible vault password file
 ansible_vault_password_file: "vault_pass/vault_pass.txt"
 # Ansible cfg file path
-ansible_hostfile: "ansible.cfg"
+ansible_config_file: "ansible.cfg"
 # Ansible play to play
 ansible_playbook: "vagarant_init_play.yml"
 # Ansible limit to use

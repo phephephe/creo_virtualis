@@ -10,11 +10,14 @@
 - name: Create user for Ansible
   import_tasks: ansible_user.yml
 
+- debug:
+    var: ansible_ssh_public_key_file
+
 - name: Set authorized key taken from file for the Ansible user
   authorized_key:
     user: "{{ ansible_user_name }}"
     state: present
-    key: "{{ lookup('file', {{ ansible_ssh_public_key_file }} ) }}"
+    key: "{{ lookup('file', ansible_ssh_public_key_file) }}"
 
 
 
