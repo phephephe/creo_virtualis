@@ -1,4 +1,4 @@
-# creo_virtualis
+# Creo Virtualis
 
 To use Vagrant to create Virtual Machines using data from a configuration file. This way it may be more simple to get Vagrant to setup multiple VMs at the same time. 
 
