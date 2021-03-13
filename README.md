@@ -1,10 +1,17 @@
 # Creo Virtualis
 
-To use Vagrant to create Virtual Machines using data from a configuration file. This way it may be more simple to get Vagrant to setup multiple VMs at the same time. 
+This project Creo Virtualis offers way to enable Vagrant to use data from a configuration file to create Virtual Machines.  This way it may be more simple to get Vagrant to setup multiple VMs at the same time. 
 
 Ansible is used to perform minimal provising to the VMs. The file would be typically located on Ansible Inventory directory.
 
 Vargrant uses VirtualBox v6.1 to host the VMs.
+
+## Environment
+
+One needs to install following software in order to use Creo Virtualis:
+* Vagrant (v2.2.14)
+* VirtualBox (v6.1.x)
+* Ansible (2.9.x/2.10.x)
 
 ## Usage
 
@@ -44,9 +51,11 @@ When using this project please consider using external inventory with real varia
 
 The default location for vagrant_hosts.yml file is inventory/vagrant_hosts.yml
 
-'nodes' variable contains host specific settings.
+This configuration file contains few variables to enable Vagrant to setup the VMs.
 
-Following hostname is minimum parameter that the 'nodes' must contain.
+host specific settings are defined by 'nodes' variable.
+
+The 'nodes' must contain at least 'hostname' parameter in order to function.
 
 ```
 nodes:
