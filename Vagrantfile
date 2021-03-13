@@ -113,14 +113,14 @@ Vagrant.configure(vagrant_version) do |config|
         vb.name = node['hostname']
         vb.customize ['modifyvm', :id, '--memory', node['mem'], '--cpus', node['cpu'], '--hwvirtex', 'on']
       end # end provider
-      
+
     # code for the last node member
     if index == nodes.count - 1
     # Lets copy our generated ssh public key as authorized key to the Virtualbox VMs
     file_pub = File.open("#{ENV['HOME']}/#{ssh_key_dir}/#{ssh_key}.pub")
     public_key = file_pub.read
     config.vm.provision "shell", :inline =>"
-        echo 'Copying the public SSH key to the VMs.'
+        echo 'Copying the public SSH key to the VM'
         mkdir -p /home/#{ansible_user}/.ssh
         chmod 700 /home/#{ansible_user}/.ssh
         echo '#{public_key}' >> /home/#{ansible_user}/.ssh/authorized_keys
