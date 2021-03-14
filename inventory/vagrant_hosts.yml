@@ -22,6 +22,11 @@ nodes:
     box: 'debian/buster64'  
   - hostname: 'test4'
 
+# Default values
+default_box: 'debian/buster64'
+default_cpu: '1'
+default_mem: '512'
+
 # Ansible user name for Vagrant to use
 ansible_user: vagrant
 ansible_user_password: 'vagrant'

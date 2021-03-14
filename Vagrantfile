@@ -9,18 +9,22 @@ require 'getoptlong'
 require 'yaml'
 
 # Variable, Default conf file
-hostfile = "inventory/vagrant_hosts.yml"
+hostfile = "inventory/vagrant_hosts.yml_tmp"
+default_box = 'debian/buster64'
+default_cpu = '1'
+default_mem = '512'
+default_hostname = "default" 
+default_ip = "192.168.1.10"
 nodes = []
-ansible_user = ''
-ansible_user_password = ''
-ssh_key_dir = ''
-ssh_key = ''
-public_key_path = ''
-ansible_inventory_path = ''
-ansible_vault_password_file = ''
-ansible_hostfile = ''
-ansible_playbook = ''
-ansible_limit = ''
+ansible_user = 'vagrant'
+ansible_user_password = 'vagrant'
+ssh_key_dir = 'default_ssh_keys'
+ssh_key = 'default_id_rsa'
+ansible_inventory_path = 'inventory/hosts'
+ansible_vault_password_file = 'vault_pass/vault_pass.txt'
+ansible_config_file = "ansible.cfg"
+ansible_playbook = 'vagarant_init_play.yml'
+ansible_limit = 'all'
 
 opts = GetoptLong.new(
   [ '--hostfile', GetoptLong::REQUIRED_ARGUMENT ]
@@ -39,6 +43,9 @@ if File.exists?(File.join(File.dirname(__FILE__), hostfile))
   conf_vars = YAML.load_file(File.join(File.dirname(__FILE__), hostfile))
   # Variables from the config file
   nodes = conf_vars['nodes']
+  default_box = conf_vars['default_box']
+  default_cpu = conf_vars['default_cpu']
+  default_mem = conf_vars['default_mem']
   ansible_user = conf_vars['ansible_user']
   ansible_user_password = conf_vars['ansible_user_password']
   ssh_key_dir = conf_vars['ssh_key_dir']
@@ -49,10 +56,15 @@ if File.exists?(File.join(File.dirname(__FILE__), hostfile))
   ansible_config_file = conf_vars['ansible_config_file']
   ansible_playbook = conf_vars['ansible_playbook']
   ansible_limit = conf_vars['ansible_limit']
+else 
+nodes = [
+  { "hostname" => "#{default_hostname}", "ip" => "#{default_ip}" }
+]
 end
 puts "*** Nodes found ***"
 puts nodes
 puts "******"
+
 # All Vagrant configuration is done below.
 vagrant_version = "2"
 
@@ -83,18 +95,17 @@ Vagrant.configure(vagrant_version) do |config|
     config.vbguest.auto_update = false
   end
   config.vm.synced_folder ".", "/vagrant", disabled: true
-
   nodes.each_with_index do |node, index|
     config.vm.define node['hostname'] do |cfg|
       cfg.vm.provider :virtualbox do |vb, override|
         if node['box'].to_s.empty?
-          node['box'] = 'debian/buster64'
+          node['box'] = default_box
         end
         if node['cpu'].to_s.empty?
-          node['cpu'] = '1'
+          node['cpu'] = default_cpu
         end
         if node['mem'].to_s.empty?
-          node['mem'] = '512'
+          node['mem'] = default_mem
         end
         config.vm.box = node['box']
         if !node['ip'].to_s.empty?
