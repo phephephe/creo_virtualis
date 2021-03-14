@@ -9,7 +9,7 @@ require 'getoptlong'
 require 'yaml'
 
 # Variable, Default conf file
-hostfile = "inventory/vagrant_hosts.yml_tmp"
+hostfile = "inventory/vagrant_hosts.yml"
 default_box = 'debian/buster64'
 default_cpu = '1'
 default_mem = '512'
