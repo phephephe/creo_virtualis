@@ -33,6 +33,9 @@ So, all other normal Vagrant commands should also work.
 
 If --hostfile=.. is not given then 'inventory/vagrant_hosts.yml' path is assumed to be used.
 
+If not configuration file given (--hostfile) or found (default), then hard coded default values are used.
+
+
 ## Inventory
 
 When using this project please consider using external inventory with real variable values.
@@ -97,7 +100,7 @@ ansible_inventory_path:
 # Ansible vault password file
 ansible_vault_password_file:
 # Ansible cfg file path
-ansible_hostfile:
+ansible_config_file:
 # Ansible play to play
 ansible_playbook:
 # Ansible limit to use
