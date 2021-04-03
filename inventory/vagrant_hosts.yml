@@ -45,3 +45,5 @@ ansible_config_file: "ansible.cfg"
 ansible_playbook: "vagarant_init_play.yml"
 # Ansible limit to use
 ansible_limit: "all"
+# Ansible verbose level (from '' to -vvvvv)
+ansible_verbose_level: "-vvv"

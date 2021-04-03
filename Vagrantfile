@@ -25,6 +25,7 @@ ansible_vault_password_file = 'vault_pass/vault_pass.txt'
 ansible_config_file = "ansible.cfg"
 ansible_playbook = 'vagarant_init_play.yml'
 ansible_limit = 'all'
+ansible_verbose_level = ''
 
 opts = GetoptLong.new(
   [ '--hostfile', GetoptLong::REQUIRED_ARGUMENT ]
@@ -56,6 +57,7 @@ if File.exists?(File.join(File.dirname(__FILE__), hostfile))
   ansible_config_file = conf_vars['ansible_config_file']
   ansible_playbook = conf_vars['ansible_playbook']
   ansible_limit = conf_vars['ansible_limit']
+  ansible_verbose_level = conf_vars['ansible_verbose_level']
 else 
 nodes = [
   { "hostname" => "#{default_hostname}", "ip" => "#{default_ip}" }
@@ -152,7 +154,7 @@ Vagrant.configure(vagrant_version) do |config|
         ansible.playbook = "#{ansible_playbook}"
         ansible.compatibility_mode = "2.0"
         ansible.verbose = true
-        #ansible.verbose = "-vvvv"
+        ansible.verbose = "#{ansible_verbose_level}" 
         ansible.become = true
         ansible.extra_vars = {
           ansible_ssh_user: "#{ansible_user}",

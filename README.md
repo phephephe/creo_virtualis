@@ -22,6 +22,8 @@ Following commands should normally be used.
 * vagrant --hostfile=<file_path> destroy -f
 * vagrant --hostfile=<file_path> ssh <hostname>
 
+Note: use relative path like '../somedir/vagrant_hosts.yml' 
+
 When using following commands then default inventory/vagrant_hosts.yml is use. 
 * vagrant up
 * vagrant provision
