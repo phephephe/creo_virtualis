@@ -9,8 +9,8 @@ Vargrant uses VirtualBox v6.1 to host the VMs.
 ## Environment
 
 One needs to install following software in order to use Creo Virtualis:
-* Vagrant (v2.2.14)
-* VirtualBox (v6.1.x)
+* Vagrant (>= v2.2.14)
+* VirtualBox (>= v6.1.x)
 * Ansible (2.9.x/2.10.x)
 
 ## Usage
@@ -111,7 +111,7 @@ ansible_limit:
 
 ## Credit
 
-I had looked into making creating VMs more dynamically for a while but https://ctrlnotes.com/vagrant-advanced-examples/ article gave me the idea to try to do it this way.
+I had looked into creation of VMs more dynamically for a while but https://ctrlnotes.com/vagrant-advanced-examples/ article gave me the idea to try to do it this way.
 
 ## ToDo
 
